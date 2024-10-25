@@ -9,3 +9,10 @@ Query_decompose_gpt.ipynb
 Multihop_RAG query decomposition using gpt-4o.
 
 langchain과의 결과 비교 용도.
+
+
+
+4type_classification_using_LLM_.ipynb
+---
+LLM을 이용한 4가지 타입 분류 자동화.
+
