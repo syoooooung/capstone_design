@@ -1,0 +1,43 @@
+def generate_subqueries(original_query, split_results):
+    prompt = f"""
+Given a query with multiple entities or phrases separated by conjunctions or commas, complete each separated part to retain only the essential meaning of the original query.
+
+Instructions:
+1. For each separated phrase after a conjunction or comma, identify only the necessary words or context from the initial part of the query.
+2. Focus on minimizing redundancy, keeping each subquery as concise as possible while preserving the original intent.
+3. Generate a complete phrase for each entity as an independent subquery, without repeating any unneeded context.
+4. Return each subquery in the format 'subquery: {{concise phrase for entity}}'.
+
+Original Query: "{original_query}"
+Separated Parts:
+{split_results}
+
+Example:
+Original Query: "profit of Apple, Tesla and Microsoft?"
+Subqueries:
+- subquery: profit of Apple
+- subquery: profit of Tesla
+- subquery: profit of Microsoft
+
+Another Example:
+Original Query: "headquarters of Google, Facebook, and Amazon in California or New York?"
+Subqueries:
+- subquery: headquarters of Google in California
+- subquery: headquarters of Facebook in California
+- subquery: headquarters of Amazon in California
+- subquery: headquarters of Google in New York
+- subquery: headquarters of Facebook in New York
+- subquery: headquarters of Amazon in New York
+
+One more example:
+Original Query: "Who is the individual associated with the cryptocurrency industry facing a criminal trial on fraud and conspiracy charges, as reported by both The Verge and TechCrunch, and is accused by prosecutors of committing fraud for personal gain?"
+Subqueries:
+- subquery: Who is the individual associated with the cryptocurrency industry facing a criminal trial on fraud?
+- subquery: Who is the individual associated with the cryptocurrency industry facing a criminal trial conspiracy charges?
+- subquery: Who is the individual associated with the cryptocurrency industry as reported by The Verge?
+- subquery: Who is the individual associated with the cryptocurrency industry as reported by TechCrunch?
+- subquery: Who is the individual is accused by prosecutors of committing fraud for personal gain?
+
+Now, based on the above examples, provide a list of concise subqueries for each part of the question while preserving the essential meaning.
+"""
+    return prompt
