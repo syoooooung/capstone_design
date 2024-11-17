@@ -1,1 +1,41 @@
+# 서브쿼리 생성 프롬프트
+def generate_subqueries2(original_query, split_results):
+    prompt = f"""
+Given a query with multiple entities or phrases separated by conjunctions or commas, create each subquery by keeping as much of the original phrasing as necessary to maintain the intent and meaning of the original query.
 
+Instructions:
+1. For each phrase or section after a conjunction or comma, create a complete subquery that retains necessary context from the original query.
+2. Ensure each subquery stands alone with full context so no information or intent is lost, and no subquery is overly simplified.
+3. Maintain original terms where possible and ensure each subquery is grammatically complete.
+When you fill in a sentence (subquery) in Separate Parts, always find it in the words in the original question and fill it in.
+
+
+Original Query: "{original_query}"
+Separated Parts:
+{split_results}
+
+Example:
+Original Query: "Who has won more awards, Dan Schneider or Helen Hunt?"
+->
+- subquery: Who has won more awards than Helen Hunt?
+- subquery: Who has won more awards than Dan Schneider?
+
+Example:
+Original Query: "profit of Apple, Tesla and Microsoft?"
+->
+- subquery: profit of Apple
+- subquery: profit of Tesla
+- subquery: profit of Microsoft
+
+One more example:
+Original Query: "Which American singer and songwriter has a mezzo-soprano vocal range, Tim Armstrong or Tori Amos?"
+->
+- subquery: Which American singer has a mezzo-soprano vocal range?
+- subquery: Which American songwriter has a mezzo-soprano vocal range?
+- subquery: Is Tim Armstrong an American singer and songwriter with a mezzo-soprano vocal range?
+- subquery: Is Tori Amos an American singer and songwriter with a mezzo-soprano vocal range?
+
+Now, based on the above examples, provide a list of subqueries for each part of the question while preserving the essential meaning.
+- subquery: <- Don't say anything other than the format that starts with this form. And the decomposed query that is generated can't just generate the original question. Don't forget the purpose of dividing in the original question.
+"""
+    return prompt
