@@ -1,0 +1,48 @@
+#######################MultihopRAG22222222222222222222#####################
+# 서브쿼리 생성 프롬프트
+def generate_subqueries2(original_query, split_results):
+    prompt = f"""
+Given a query with multiple entities or phrases separated by conjunctions or commas, create each subquery by keeping as much of the original phrasing as necessary to maintain the intent and meaning of the original query.
+
+Instructions:
+1. Look for an omission at the beginning of the current section to create a full subquery that maintains the context required in the original query for each phrase or section that follows an conjunction or comma.
+2. Ensure that each subquery stands independently with comprehensive context, preventing any loss of information or intent, and avoiding excessive simplification.
+3. Preserve original terminology wherever possible, guaranteeing that each subquery forms a grammatically complete sentence.
+
+Original Query: "{original_query}"
+Separated Parts:
+{split_results}
+
+Example:
+Original Query: "What is the name of the organization discussed in TechCrunch articles that, despite its financial instability, is recognized for creating ChatGPT, which is both a priority and a platform for ongoing innovations, and is planning to enhance its capabilities with the release of GPT-4 and associated APIs?"
+Seperated Parts: ['What is the name of the organization discussed in TechCrunch articles that', 'despite its financial instability' , 'is recognized for creating ChatGPT', 'which is both a priority and a platform for ongoing innovations', 'is planning to enhance its capabilities with the release of GPT-4', 'associated APIs?']
+->
+- subquery: What is the name of the organization discussed in TechCrunch articles, despite its financial instability?
+- subquery: What is the name of the organization recognized for creating ChatGPT?
+- subquery: What is the name of the organization recognized for creating ChatGPT, which is both a priority and a platform for ongoing innovations?
+- subquery: What is the name of the organization planning to enhance ChatGPT with the release of GPT-4?
+- subquery: What is the name of the organization planning to enhance ChatGPT associated APIs?
+
+Example:
+Original Query: "profit of Apple, Tesla and Microsoft?"
+Seperated Parts: ['profit of Apple', 'Tesla', 'Microsoft?']
+->
+- subquery: profit of Apple
+- subquery: profit of Tesla
+- subquery: profit of Microsoft
+
+
+One more example:
+Original Query: "Who is the individual associated with the cryptocurrency industry facing a criminal trial on fraud and conspiracy charges, as reported by both The Verge and TechCrunch, and is accused by prosecutors of committing fraud for personal gain?"
+Seperated Parts: ['Who is the individual associated with the cryptocurrency industry facing a criminal trial on fraud', 'conspiracy charges', 'as reported by both The Verge and TechCrunch', 'is accused by prosecutors of committing fraud for personal gain?']
+->
+- subquery: Who is the individual associated with the cryptocurrency industry facing a criminal trial on fraud?
+- subquery: Who is the individual associated with the cryptocurrency industry facing a criminal trial conspiracy charges?
+- subquery: Who is the individual associated with the cryptocurrency industry as reported by both The Verge and TechCrunch?
+- subquery: Who is the individual is accused by prosecutors of committing fraud for personal gain?
+
+
+Now, based on the above examples, provide a list of subqueries for each part of the question while preserving the essential meaning.
+Don't say anything other than the format that starts with this form (- subquery: ). And the decomposed query that is generated can't just generate the original question. Don't forget the purpose of dividing in the original question.
+"""
+    return prompt
