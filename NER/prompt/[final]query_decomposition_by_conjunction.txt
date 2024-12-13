@@ -1,0 +1,44 @@
+Instruction_str = """
+Given a query with multiple entities or phrases separated by conjunctions or commas, create each sub-sentence by keeping as much of the original phrasing as necessary to maintain the intent and meaning of the original query.
+
+Instructions:
+1. For each separated part, complete the meaning of the sentence using the previous part of the current section.
+2. Preserve original terminology wherever possible, guaranteeing that each sub-sentence forms a grammatically complete sentence.
+3. The number of sub-sentences created must match the number of separated parts.
+
+"""
+
+# 서브쿼리 생성 프롬프트
+def generate_subqueries2(original_query, split_results):
+    prompt = f"""
+Original Query: "{original_query}"
+Separated Parts:
+{split_results}
+
+Example:
+Original Query: "Who is the individual associated with the cryptocurrency industry facing a criminal trial on fraud and conspiracy charges, as reported by both The Verge and TechCrunch, and is accused by prosecutors of committing fraud for personal gain?"
+Seperated Parts: ['Who is the individual associated with the cryptocurrency industry facing a criminal trial on fraud', 'conspiracy charges', 'as reported by both The Verge and TechCrunch', 'is accused by prosecutors of committing fraud for personal gain?']
+->
+- subquery: Who is the individual associated with the cryptocurrency industry facing a criminal trial on fraud charges?
+- subquery: Who is the individual associated with the cryptocurrency industry facing conspiracy charges?
+- subquery: Who is the individual associated with the cryptocurrency industry, as reported by both The Verge and TechCrunch?
+- subqeury: Who is the individual is accused by prosecutors of committing fraud for personal gain?
+
+
+Example:
+Original Query: "Who's birth date is the first earliest, among the birth date of Neil Armstrong, the first human to set foot on the Moon during the Apollo 11 mission in 1969, whose historic words, \"That's one small step for a man, one giant leap for mankind\", marked a significant achievement in space exploration, Taylor Swift, and Chris Hemsworth?"
+Seperated Parts: ['Who's birth date is the first earliest', 'among the birth date of Neil Armstrong', 'the first human to set foot on the Moon during the Apollo 11 mission in 1969', 'whose historic words, "That's one small step for a man, one giant leap for mankind"', 'marked a significant achievement in space exploration', Taylor Swift', 'Chris Hemsworth?']
+->
+- subquery: Who's birth date is the first earliest?
+- subquery: What is the birth date of Neil Armstrong?
+- subquery: Was Neil Armstrong the first human to set foot on the Moon during the Apollo 11 mission in 1969?
+- subqeury: Is historic words of Neil Armstrong \"That's one small step for a man, one giant leap for mankind\"?
+- subqeury: Is historic words of Neil Armstrong mark a significant achievement in space exploration?
+- subqeury: What is the birth date of Taylor Swift?
+- subqeury: What is the birth date of Chris Hemsworth?
+
+
+Now, based on the above examples, provide a list of subqueries for each part of the sentence while preserving the essential meaning.
+Don't say anything other than the format that starts with this form (- subquery: ). And the decomposed query that is generated can't just generate the original question. Don't forget the purpose of dividing in the original question.
+"""
+    return prompt
