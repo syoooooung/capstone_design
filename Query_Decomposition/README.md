@@ -22,3 +22,8 @@ LLM을 이용한 4가지 타입 분류 자동화.
 SubQ_NER_hit.ipynb
 ---
 누락과 변형 측정을 위한 Metric 코드
+
+
+capstone_design/Query_Decomposition/[final_form]subquery_by_conjunction_v2.ipynb
+---
+Query Decomposition final form
